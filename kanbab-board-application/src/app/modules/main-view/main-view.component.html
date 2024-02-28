@@ -1,0 +1,40 @@
+<div class="root">
+    <div class="navbar has-background-dark">
+        <div class="navbar-brand">
+          <div class="navbar-item">
+            <h1 class="app-name has-gradient-text">Your Personel Kanban Board</h1>
+          </div>
+        </div>
+    </div>
+
+    <div class="board">
+      <div class="board-bar">
+        <p class="board-name">Board</p>
+      </div>
+     
+
+      <div class="board-wrapper">
+        <div class="board-columns" cdkDropListGroup>
+          @for (board of myBoard.tasks; track board){
+            <div class="board-column">
+                <div class="column-title">
+                  {{board.name}}
+                </div>
+
+                <div class="tasks-container" cdkDropList [cdkDropListData]="board.tasks"
+                  (cdkDropListDropped)="drop($event)">
+                  @for (item of board.tasks; track item) {
+                  <div class="task" cdkDrag>
+                    {{item}}
+                  </div>
+                  }
+                </div>
+              
+            </div>
+          }
+        </div>
+
+      </div>
+    </div>
+
+</div>
