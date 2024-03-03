@@ -1,5 +1,10 @@
-import { TasksList } from './tasksList.model';
+import { ITasks, TasksList } from './tasksList.model';
 
 export class Board {
-    constructor(public name: string, public tasks: TasksList[]) {}
+    constructor(public name: string, public columns: TasksList[]) {}
+}
+
+export interface Iboard {
+    boardName: string;
+    columns: ITasks[];
 }

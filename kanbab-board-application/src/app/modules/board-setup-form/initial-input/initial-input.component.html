@@ -1,0 +1,41 @@
+<div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        
+    </div>
+    
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<form [formGroup]="boardForm" (ngSubmit)="onSubmit()">
+    <label for="boardName">Board Name:</label>
+    <input type="text" id="boardName" formControlName="boardName" required>
+    
+    
+        @for(column of columns.controls; track column; let i =$index){
+            <div formArrayName="columns">
+                <ng-container [formGroupName]="i">
+                    <label for="columnName">Column Name:</label>
+                    <input type="text" id="columnName" formControlName="name" required>
+            
+                    
+                    @for(task of getColumnTasks(i)?.controls;track task ;let j =$index){
+                        <div formArrayName="taskDescription">
+                            <ng-container [formGroupName]="j">
+                                <label for="taskName">Task:</label>
+                                <input type="text" id="taskName" required>
+                                <input type="text" id="taskDescription" required>
+                                <button type="button" (click)="removeTask(i, j)">Remove Task</button>
+                            </ng-container>
+                        </div>
+                    }
+            
+                    <button type="button" (click)="addTask(i)">Add Task</button>
+                    <button type="button" *ngIf="columns.length > 1" (click)="removeColumn(i)">Remove Column</button>
+                </ng-container>
+            </div>
+        }
+  
+    <button type="button" (click)="addColumn()">Add Column</button>
+    <button type="submit" [disabled]="boardForm.invalid">Create Board</button>
+  </form>

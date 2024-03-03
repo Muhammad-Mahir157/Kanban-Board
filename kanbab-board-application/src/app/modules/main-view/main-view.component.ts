@@ -7,13 +7,15 @@ import {
   CdkDropList,
   CdkDropListGroup,
 } from '@angular/cdk/drag-drop';
-import { Board } from '../../models/board.model';
+import { Board, Iboard } from '../../models/board.model';
 import { TasksList } from '../../models/tasksList.model';
+import { InitialInputComponent } from '../board-setup-form/initial-input/initial-input.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main-view',
   standalone: true,
-  imports: [CdkDropListGroup,CdkDropList, CdkDrag],
+  imports: [CdkDropListGroup,CdkDropList, CdkDrag, InitialInputComponent, CommonModule],
   templateUrl: './main-view.component.html',
   styleUrl: './main-view.component.scss'
 })
@@ -29,7 +31,13 @@ inProgressList: TasksList = new TasksList("In Progress", this.inProgressTasks);
 completedList: TasksList = new TasksList("Completed", this.completedTasks);
 
 // Creating a board with the dummy tasks lists
-myBoard: Board = new Board("MyBoard", [this.todoList, this.inProgressList, this.completedList]);
+// boardData: Board = new Board("MyBoard", [this.todoList, this.inProgressList, this.completedList]);
+boardData!: Iboard;
+
+
+  onBoardSetup(data: any) {
+    this.boardData = data;
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -43,4 +51,5 @@ myBoard: Board = new Board("MyBoard", [this.todoList, this.inProgressList, this.
       );
     }
   }
+
 }
