@@ -11,6 +11,7 @@ import { Board, Iboard } from '../../models/board.model';
 import { TasksList } from '../../models/tasksList.model';
 import { InitialInputComponent } from '../board-setup-form/initial-input/initial-input.component';
 import { CommonModule } from '@angular/common';
+import { ITask } from '../../models/task.model';
 
 @Component({
   selector: 'app-main-view',
@@ -20,10 +21,59 @@ import { CommonModule } from '@angular/common';
   styleUrl: './main-view.component.scss'
 })
 export class ManiViewComponent {
-  // Creating dummy tasks lists
-todoTasks: string[] = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-inProgressTasks: string[] = ['Finish presentation', 'Attend meeting', 'Code new feature'];
-completedTasks: string[] = ['Submit report', 'Review code', 'Send emails'];
+
+// Creating dummy tasks lists
+todoTasks: ITask[] = [
+{
+  taskName: "Task 1",
+  taskDescription: "Complete assignment for English class"
+},
+// {
+//   taskName: "Get to work",
+//   taskDescription: "Reach at the bus stop early"
+// },
+// {
+//   taskName: "Pick up groceries",
+//   taskDescription: "Pick up groceries from nearest store"
+// }
+];
+inProgressTasks: ITask[] = [
+{
+  taskName: "Task 2",
+  taskDescription: "Prepare presentation slides for upcoming meeting"
+},
+// {
+//   taskName: "Finish presentation",
+//   taskDescription: "Get presentation review after giving it a final touch"
+// },
+// {
+//  taskName: "Attend meeting",
+//  taskDescription: "Participate actively and take notes"
+// },
+// {
+// taskName: "Code new feature",
+// taskDescription: "Implement feature according to specifications"
+// }
+];
+completedTasks: ITask[] = [
+{
+  taskName: "Task 3",
+  taskDescription: "Review code changes and provide feedback"
+},
+// {	
+// 	taskName: "Submit report",
+//     	taskDescription: "Compile and send the monthly report to stakeholders"
+// },
+// {	
+// 	taskName: "Review code",
+//     taskDescription: "Check for errors and optimize code efficiency"
+// },
+
+// {	
+// 	taskName: "Send emails",
+//     taskDescription: "Respond to inquiries and follow up on pending tasks"
+// },
+];
 
 // Creating dummy tasks lists objects
 todoList: TasksList = new TasksList("Todo", this.todoTasks);
@@ -32,14 +82,26 @@ completedList: TasksList = new TasksList("Completed", this.completedTasks);
 
 // Creating a board with the dummy tasks lists
 // boardData: Board = new Board("MyBoard", [this.todoList, this.inProgressList, this.completedList]);
-boardData!: Iboard;
+boardData: Iboard = {} as Iboard;
+showModal: boolean = false;
 
+  ngOninit(): void {
+  }
+
+  constructor() {
+    this.boardData.boardName = "Board";
+    this.boardData.columns = [];
+    this.boardData.columns.push(this.todoList);
+    this.boardData.columns.push(this.inProgressList);
+    this.boardData.columns.push(this.completedList);
+  }
 
   onBoardSetup(data: any) {
+    this.showModal = false;
     this.boardData = data;
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -50,6 +112,10 @@ boardData!: Iboard;
         event.currentIndex,
       );
     }
+  }
+
+  showCreateBoardModal(): void {
+      this.showModal = true;
   }
 
 }

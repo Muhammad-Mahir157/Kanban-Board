@@ -1,45 +1,45 @@
-@if(!boardData){
-  <app-initial-input (onSubmittingInfo)="this.onBoardSetup($event)" ></app-initial-input>
-}
-@else {
   <div class="root">
-      <div class="navbar has-background-dark">
-          <div class="navbar-brand">
-            <div class="navbar-item">
-              <h1 class="app-name has-gradient-text">Your Personel Kanban Board</h1>
+          <div class="navbar has-background-dark">
+              <div class="navbar-brand">
+                <div class="navbar-item">
+                  <h1 class="app-name has-gradient-text">Your Personel Kanban Board</h1>
+                </div>
+              </div>
+          </div>
+
+          <div class="board">
+            <div class="board-bar">
+              <p class="board-name">{{boardData.boardName}}</p>
+              <a class="createBtn" (click)="showCreateBoardModal()">Create</a>
+            </div>
+          
+
+            <div class="board-wrapper">
+              <div class="board-columns" cdkDropListGroup>
+                @for (column of boardData.columns; track column){
+                  <div class="board-column">
+                      <div class="column-title">
+                        {{column.name}}
+                      </div>
+
+                      <div class="tasks-container" cdkDropList [cdkDropListData]="column.tasks"
+                        (cdkDropListDropped)="drop($event)">
+                        @for (task of column.tasks; track task) {
+                        <div class="task" cdkDrag>
+                          {{task.taskName}}:- {{task.taskDescription}}
+                        </div>
+                        }
+                      </div>
+                    
+                  </div>
+                }
+              </div>
+
             </div>
           </div>
-      </div>
+</div>
 
-      <div class="board">
-        <div class="board-bar">
-          <p class="board-name">{{boardData.boardName}}</p>
-        </div>
-      
 
-        <div class="board-wrapper">
-          <div class="board-columns" cdkDropListGroup>
-            @for (column of boardData.columns; track column){
-              <div class="board-column">
-                  <div class="column-title">
-                    {{column.name}}
-                  </div>
-
-                  <div class="tasks-container" cdkDropList [cdkDropListData]="column.tasks"
-                    (cdkDropListDropped)="drop($event)">
-                    @for (task of column.tasks; track task) {
-                    <div class="task" cdkDrag>
-                      {{task}}
-                    </div>
-                    }
-                  </div>
-                
-              </div>
-            }
-          </div>
-
-        </div>
-      </div>
-
-  </div>
+@if(this.showModal){
+  <app-initial-input (onSubmittingInfo)="this.onBoardSetup($event)" (onCancelBtnClicked)="showModal = false" ></app-initial-input>
 }

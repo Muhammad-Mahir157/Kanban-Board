@@ -1,0 +1,29 @@
+.modal-card-body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-card-body label {
+    margin-bottom: 0.5rem;
+  }
+  
+  .modal-card-body input,
+  .modal-card-body button {
+    margin-bottom: 1rem;
+  }
+  
+  .modal-card-body .button.is-danger {
+    margin-right: 0.5rem;
+  }
+  
+  .modal-card-body .button.is-success {
+    margin-left: auto; /* Pushes the button to the right */
+  }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .modal-card-body input,
+    .modal-card-body button {
+      width: 100%; /* Make inputs and buttons full width */
+    }
+  }

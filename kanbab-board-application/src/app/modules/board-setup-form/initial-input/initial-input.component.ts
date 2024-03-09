@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class InitialInputComponent {
   @Output() onSubmittingInfo = new EventEmitter<any>();
+  @Output() onCancelBtnClicked = new EventEmitter<any>();
+
   boardForm: FormGroup;
   boardData: Iboard = {} as Iboard;
 
@@ -23,9 +25,9 @@ export class InitialInputComponent {
   }
 
   ngOnInit(): void {
-    this.columns.push(this.createColumn("ABC"));
-    this.columns.push(this.createColumn("XYZ"));
-    this.columns.push(this.createColumn("JKL"));
+    this.columns.push(this.createColumn("Todo"));
+    this.columns.push(this.createColumn("In-Progress"));
+    this.columns.push(this.createColumn("Completed"));
   }
 
   createColumn(columnName: string): FormGroup {
@@ -50,7 +52,7 @@ export class InitialInputComponent {
     const tasks = (this.boardForm.get('columns') as FormArray).at(columnIndex).get('tasks') as FormArray;
     tasks.push(this.formBuilder.group({
       taskName: ['', Validators.required],
-      taskDescription: ['', Validators.required]
+      taskDescription: ['', ]
     }));
   }
 
@@ -73,6 +75,10 @@ export class InitialInputComponent {
       this.boardData = this.boardForm.value as Iboard;
       this.onSubmittingInfo.emit(this.boardData);
     }
+  }
+
+  onCancel() {
+    this.onCancelBtnClicked.emit(null);
   }
 
 }

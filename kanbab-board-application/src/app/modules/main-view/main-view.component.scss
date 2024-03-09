@@ -28,6 +28,18 @@
     min-height: 0;
 
     .board-bar {
+        // background: rgba(gray, 0.5);
+        // padding: 8px 15px;
+    
+        // .board-name {
+        //     font-size: 20px;
+        //     font-weight: bold;
+        //     color: white;
+        // }
+        display: flex; /* Add flex display to align items */
+        justify-content: space-between; /* Align items to the extreme corners */
+        align-items: center; /* Center align items vertically */
+
         background: rgba(gray, 0.5);
         padding: 8px 15px;
     
@@ -35,6 +47,20 @@
             font-size: 20px;
             font-weight: bold;
             color: white;
+            margin: 0; /* Reset default margin */
+        }
+
+        .createBtn {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #4d0001; /* Example background color */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #a14c13; /* Example background color on hover */
+            }
         }
     }
 
